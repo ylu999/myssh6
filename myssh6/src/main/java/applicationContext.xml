@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+				http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd"
+	>
+	<!-- Enable Annotation -->
+	<context:annotation-config/>
+	<!-- Data Source -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+  		<property name="url" value="jdbc:mysql://localhost:3306/myssh"/>
+		<property name="username" value="root"/>
+  		<property name="password" value="root"/>
+  		<property name="initialSize" value="3"/>
+  		<property name="maxActive" value="500"/>
+  		<property name="maxIdle" value="2"/>
+  		<property name="minIdle" value="1"/>
+	</bean>
+	
+	<!--Spring Cache--> 
+	<!-- 
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean" />
+            </set>
+        </property>
+    </bean>
+    -->
+	<!-- Local Session Factory Bean -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="mappingResources">
+			<list>
+				<value>hbm/Employee.hbm.xml</value>
+				<value>hbm/Department.hbm.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<value>
+				hibernate.hbm2ddl.auto=update
+				
+				hibernate.dialect=org.hibernate.dialect.MySQLDialect
+				hibernate.show_sql=true
+				
+				hibernate.connection.CharSet=utf8
+				hibernate.connection.characterEncoding=utf8
+				hibernate.connection.useUnicode=true
+				
+				hibernate.generate_statistics=true
+				hibernate.cache.use_structured_entries=true
+				hibernate.cache.use_second_level_cache=true
+				hibernate.cache.use_query_cache=true			
+				hibernate.cache.region.factory_class=org.hibernate.cache.ehcache.EhCacheRegionFactory
+				net.sf.ehcache.configurationResourceName=/ehcache.xml
+			</value>
+			<!-- 
+				hibernate.format_sql=true
+			 -->
+		</property>
+	</bean>
+	<!-- Spring Transaction Manager -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- Start Transaction Annotation -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- Service Beans -->
+	<bean id="employeeService" class="com.gvace.service.impl.EmployeeService">
+		<!-- try annotation @Resource instead of here -->
+		<!-- <property name="sessionFactory" ref="sessionFactory"/> -->
+	</bean>
+	<bean id="departmentService" class="com.gvace.service.impl.DepartmentService">
+		<!-- try annotation @Resource instead of here -->
+		<!-- <property name="sessionFactory" ref="sessionFactory"/> -->
+	</bean>
+	<!-- Action
+		set name with the action->path configured in struts-config.xml
+		then you can delete the type property configured in struts-config.xml for this Action
+		because we already set the class here
+	-->
+	<bean name="/login" class="com.gvace.web.action.LoginAction">
+		<!-- add dependency of employeeServiceInterface -->
+		<!-- try annotation @Resource instead of here -->
+		<!-- <property name="employeeService" ref="employeeService"></property> -->
+	</bean>
+	<bean name="/emp" class="com.gvace.web.action.EmployeeAction">
+		<!-- add dependency of employeeServiceInterface -->
+		<!-- try annotation @Resource instead of here -->
+		<!-- <property name="employeeService" ref="employeeService"></property> -->
+	</bean>
+</beans>
+
+
+
+
+

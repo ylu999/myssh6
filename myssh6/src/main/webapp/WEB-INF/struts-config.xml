@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+       "http://struts.apache.org/dtds/struts-config_1_3.dtd">
+<struts-config>
+	<form-beans>
+		<form-bean name="loginForm" type="com.gvace.web.form.LoginForm"></form-bean>
+		<form-bean name="employeeForm" type="com.gvace.web.form.EmployeeForm"></form-bean>
+	</form-beans>
+	
+	<global-forwards>
+		<forward name="err" path="/WEB-INF/err.jsp"></forward>
+	</global-forwards>
+	<action-mappings>
+		<!-- localhost:8080/webapp/login.do, action path is the requested url path -->
+		<!-- form-bean connect to the action identified by name -->
+		<action path="/login" parameter="r" scope="request" name="loginForm"><!-- deleted type property since we have spring -->
+			<!-- action choose which forward to go by forward name -->
+			<forward name="ok" path="/WEB-INF/main.jsp"></forward>
+			<forward name="err" path="/WEB-INF/err.jsp"></forward>
+		</action>
+		<action path="/emp" parameter="r" scope="request" name="employeeForm"><!-- deleted type property since we have spring -->
+			<!-- action choose which forward to go by forward name -->
+			<forward name="add" path="/WEB-INF/emp/add.jsp"></forward>
+			<forward name="list" path="/WEB-INF/emp/list.jsp"></forward>
+			<forward name="ok" path="/WEB-INF/emp/list.jsp"></forward>
+			<forward name="err" path="/WEB-INF/err.jsp"></forward>
+		</action>
+	</action-mappings>
+	<!-- set Proxy for the request control: DelegatingRequestProcessor -->
+	<controller>
+		<set-property property="processorClass" value="org.springframework.web.struts.DelegatingRequestProcessor"/>
+	</controller>
+</struts-config>
