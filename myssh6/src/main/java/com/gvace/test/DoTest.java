@@ -2,6 +2,7 @@ package com.gvace.test;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.struts.action.Action;
@@ -85,5 +86,14 @@ public class DoTest extends Action{
 		DepartmentServiceInterface departmentServiceInterface = (DepartmentServiceInterface)ac.getBean("departmentService");
 		Department d = (Department) departmentServiceInterface.findById(Department.class,1);
 		System.out.println(d.getName());
+	}
+	@Test
+	public void test3(){
+		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+		EmployeeServiceInterface employeeServiceInterface = (EmployeeServiceInterface)ac.getBean("employeeService");
+		List<Object> list = employeeServiceInterface.listByPage("Employee",1, 10);
+		for(Object o: list){
+			System.out.println("Employee:"+((Employee)o).getName());
+		}
 	}
 }
