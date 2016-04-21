@@ -1,5 +1,10 @@
 package com.gvace.util;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.lang3.StringUtils;
+
+
 public class StringHelper {
 	public static String MD5(String md5) {
 		 try {
@@ -13,5 +18,13 @@ public class StringHelper {
 		 } catch (java.security.NoSuchAlgorithmException e) {
 			 throw new RuntimeException(e.getMessage());
 		 }
+	}
+	public static Integer getIntegerParameter(HttpServletRequest request, String name){
+		String valueStr = (String)request.getParameter(name);
+		if(valueStr==null)return null;
+		else if(StringUtils.isNumeric(valueStr)){
+			return Integer.parseInt(valueStr);
+		}
+		return null;
 	}
 }
