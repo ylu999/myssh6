@@ -81,4 +81,8 @@ public abstract class BasicService implements BasicServiceInterface{
 		return null;
 	}
 
+	public List<Object> listByPage(String className, int page, int pageSize) {
+		return executeQueryByPage("from "+className, null, page, pageSize);
+	}
+
 }
