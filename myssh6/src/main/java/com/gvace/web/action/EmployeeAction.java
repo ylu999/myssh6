@@ -1,5 +1,7 @@
 package com.gvace.web.action;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,12 +42,18 @@ public class EmployeeAction extends DispatchAction{
 	public ActionForward list(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		Integer page = StringHelper.getIntegerParameter(request, "page");
+		if(page==null)page=1;
+		Integer pageSize = StringHelper.getIntegerParameter(request, "pageSize");
+		if(pageSize==null)pageSize=10;
+		List<Object> employeeList = employeeService.listByPage("Employee", page, pageSize);
+		request.setAttribute("employeeList", employeeList);
 		return mapping.findForward("list");
 	}
 	public ActionForward update(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		//set id
+		//to do
 		return mapping.findForward("update");
 	}
 	public ActionForward doAdd(ActionMapping mapping, ActionForm form,
@@ -73,33 +81,13 @@ public class EmployeeAction extends DispatchAction{
 	public ActionForward doUpdate(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		EmployeeForm empForm = (EmployeeForm)form;
-		Employee e = new Employee();
-		e.setUsername(empForm.getUsername());
-		
-		e = (Employee) ((EmployeeService)employeeService).login(e);
-		if(e!=null){
-			request.getSession().setAttribute("loginUser", e);
-			return mapping.findForward("ok");
-		}
-		else{
-			return mapping.findForward("err");
-		}
+		//to do
+		return mapping.findForward("err");
 	}
 	public ActionForward doDelete(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		EmployeeForm empForm = (EmployeeForm)form;
-		Employee e = new Employee();
-		e.setUsername(empForm.getUsername());
-		
-		e = (Employee) ((EmployeeService)employeeService).login(e);
-		if(e!=null){
-			request.getSession().setAttribute("loginUser", e);
-			return mapping.findForward("ok");
-		}
-		else{
-			return mapping.findForward("err");
-		}
+		//to do
+		return mapping.findForward("err");
 	}
 }
