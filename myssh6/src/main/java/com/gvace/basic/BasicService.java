@@ -97,7 +97,7 @@ public abstract class BasicService implements BasicServiceInterface{
 	}
 
 	public int getCount() {
-		return (Integer)uniqueResult("select count(*) from "+MODEL_NAME, null);
+		return Integer.parseInt(uniqueResult("select count(*) from "+MODEL_NAME, null).toString());
 	}
 
 	public int getPageCount(int pageSize) {

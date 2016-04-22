@@ -104,4 +104,10 @@ public class DoTest extends Action{
 			System.out.println("Department:"+((Department)o).getName());
 		}
 	}
+	@Test
+	public void test5(){
+		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+		DepartmentServiceInterface departmentServiceInterface = (DepartmentServiceInterface)ac.getBean("departmentService");
+		System.out.println(departmentServiceInterface.getCount());
+	}
 }
