@@ -11,7 +11,8 @@ public interface BasicServiceInterface {
 	public List<Object> executeQuery(String hql,Object[] parameters);
 	public Object uniqueResult(String hql, Object[] parameters);
 	public List<Object> executeQueryByPage(String hql,Object[] parameters,int page,int pageSize);
-	public List<Object> listByPage(String className,int page,int pageSize);
+	public List<Object> listByPage(int page,int pageSize);
 	public List executeUpdate(String hql, Object[] parameters);
 	public int getCount();
+	public int getPageCount(int pageSize);
 }

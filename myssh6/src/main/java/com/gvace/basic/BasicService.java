@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public abstract class BasicService implements BasicServiceInterface{
+	protected String MODEL_NAME;
 	@Resource
 	private SessionFactory sessionFactory;
 	
@@ -81,12 +82,16 @@ public abstract class BasicService implements BasicServiceInterface{
 		return null;
 	}
 
-	public List<Object> listByPage(String className, int page, int pageSize) {
-		return executeQueryByPage("from "+className, null, page, pageSize);
+	public List<Object> listByPage(int page, int pageSize) {
+		System.out.println("MODEL_NAME"+MODEL_NAME);
+		return executeQueryByPage("from "+MODEL_NAME, null, page, pageSize);
 	}
 
-	public int getCount(String className) {
-		return (Integer)uniqueResult("select count(*) from "+className, null);
+	public int getCount() {
+		return (Integer)uniqueResult("select count(*) from "+MODEL_NAME, null);
 	}
 
+	public int getPageCount(int pageSize) {
+		return (getCount()-1)/pageSize + 1;
+	}
 }

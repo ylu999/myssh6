@@ -91,9 +91,18 @@ public class DoTest extends Action{
 	public void test3(){
 		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 		EmployeeServiceInterface employeeServiceInterface = (EmployeeServiceInterface)ac.getBean("employeeService");
-		List<Object> list = employeeServiceInterface.listByPage("Employee",1, 10);
+		List<Object> list = employeeServiceInterface.listByPage(1, 10);
 		for(Object o: list){
 			System.out.println("Employee:"+((Employee)o).getName());
+		}
+	}
+	@Test
+	public void test4(){
+		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+		DepartmentServiceInterface departmentServiceInterface = (DepartmentServiceInterface)ac.getBean("departmentService");
+		List<Object> list = departmentServiceInterface.listByPage(1, 10);
+		for(Object o: list){
+			System.out.println("Department:"+((Department)o).getName());
 		}
 	}
 }
