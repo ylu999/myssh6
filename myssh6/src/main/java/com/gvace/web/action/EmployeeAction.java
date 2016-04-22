@@ -46,7 +46,7 @@ public class EmployeeAction extends DispatchAction{
 		if(page==null)page=1;
 		Integer pageSize = StringHelper.getIntegerParameter(request, "pageSize");
 		if(pageSize==null)pageSize=10;
-		List<Object> employeeList = employeeService.listByPage("Employee", page, pageSize);
+		List<Object> employeeList = employeeService.listByPage(page, pageSize);
 		request.setAttribute("employeeList", employeeList);
 		return mapping.findForward("list");
 	}
@@ -69,7 +69,6 @@ public class EmployeeAction extends DispatchAction{
 		e.setHireDate(new java.util.Date());
 		e.setSalary(empForm.getSalary());
 		e.setDepartment((Department)departmentService.findById(Department.class,empForm.getDepartment_id()));
-		
 		try{
 			employeeService.add(e);
 		}
