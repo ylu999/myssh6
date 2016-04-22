@@ -9,8 +9,9 @@ public interface BasicServiceInterface {
 	public void update(Object object);
 	public Object findById(Class clazz,Serializable id);
 	public List<Object> executeQuery(String hql,Object[] parameters);
-	public Object executeQueryUniqueResult(String hql, Object[] parameters);
+	public Object uniqueResult(String hql, Object[] parameters);
 	public List<Object> executeQueryByPage(String hql,Object[] parameters,int page,int pageSize);
 	public List<Object> listByPage(String className,int page,int pageSize);
 	public List executeUpdate(String hql, Object[] parameters);
+	public int getCount();
 }

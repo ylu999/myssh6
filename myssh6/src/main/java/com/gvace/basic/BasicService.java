@@ -51,7 +51,7 @@ public abstract class BasicService implements BasicServiceInterface{
 		}
 		return q.list();
 	}
-	public Object executeQueryUniqueResult(String hql, Object[] parameters) {
+	public Object uniqueResult(String hql, Object[] parameters) {
 		Query q = sessionFactory.getCurrentSession().createQuery(hql);
 		if(parameters!=null){
 			int i=0;
@@ -83,6 +83,10 @@ public abstract class BasicService implements BasicServiceInterface{
 
 	public List<Object> listByPage(String className, int page, int pageSize) {
 		return executeQueryByPage("from "+className, null, page, pageSize);
+	}
+
+	public int getCount(String className) {
+		return (Integer)uniqueResult("select count(*) from "+className, null);
 	}
 
 }

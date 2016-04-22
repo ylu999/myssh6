@@ -9,4 +9,8 @@ public class DepartmentService extends BasicService implements DepartmentService
 	public List<Object> listByPage(int page, int pageSize) {
 		return listByPage("Department",page,pageSize);
 	}
+
+	public int getCount() {
+		return getCount("Department");
+	}
 }

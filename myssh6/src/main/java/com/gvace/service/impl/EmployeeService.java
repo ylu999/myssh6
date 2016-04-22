@@ -16,7 +16,11 @@ public class EmployeeService extends BasicService implements EmployeeServiceInte
 	public Employee login(User User) {
 		String hql = "from Employee where username=? and password=?";
 		Object[] parameters = {User.getUsername(),StringHelper.MD5(User.getPassword())};
-		Employee e = (Employee)executeQueryUniqueResult(hql, parameters);
+		Employee e = (Employee)uniqueResult(hql, parameters);
 		return e;
+	}
+
+	public int getCount() {
+		return getCount("Employee");
 	}
 }
