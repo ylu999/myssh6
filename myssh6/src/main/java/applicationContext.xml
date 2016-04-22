@@ -73,10 +73,12 @@
 	<bean id="employeeService" class="com.gvace.service.impl.EmployeeService">
 		<!-- try annotation @Resource instead of here -->
 		<!-- <property name="sessionFactory" ref="sessionFactory"/> -->
+		<property name="MODEL_NAME" value="Employee"/>
 	</bean>
 	<bean id="departmentService" class="com.gvace.service.impl.DepartmentService">
 		<!-- try annotation @Resource instead of here -->
 		<!-- <property name="sessionFactory" ref="sessionFactory"/> -->
+		<property name="MODEL_NAME" value="Department"/>
 	</bean>
 	<!-- Action
 		set name with the action->path configured in struts-config.xml

@@ -23,6 +23,15 @@ public abstract class BasicService implements BasicServiceInterface{
 		this.sessionFactory = sessionFactory;
 	}
 
+	public String getMODEL_NAME() {
+		return MODEL_NAME;
+	}
+	
+	@Resource
+	public void setMODEL_NAME(String mODEL_NAME) {
+		MODEL_NAME = mODEL_NAME;
+	}
+
 	public void add(Object object) {
 		sessionFactory.getCurrentSession().save(object);
 	}
