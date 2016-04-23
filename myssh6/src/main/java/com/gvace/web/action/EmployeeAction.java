@@ -50,8 +50,7 @@ public class EmployeeAction extends DispatchAction{
 	public ActionForward list(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		list(request);
-		return mapping.findForward("list");
+		return findForwardList(request, mapping,"list");
 	}
 	public ActionForward update(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -90,7 +89,12 @@ public class EmployeeAction extends DispatchAction{
 	public ActionForward doDelete(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		//to do
-		return mapping.findForward("err");
+		int id = Integer.parseInt(request.getParameter("id"));
+		employeeService.deleteById(id);
+		return findForwardList(request,mapping,"list");
+	}
+	public ActionForward findForwardList(HttpServletRequest request,ActionMapping mapping,String forward){
+		list(request);
+		return mapping.findForward(forward);
 	}
 }
