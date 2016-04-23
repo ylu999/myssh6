@@ -1,6 +1,5 @@
 package com.gvace.test;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,40 +13,12 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.gvace.domain.Department;
 import com.gvace.domain.Employee;
-import com.gvace.domain.User;
-import com.gvace.service.impl.EmployeeService;
 import com.gvace.service.inter.DepartmentServiceInterface;
 import com.gvace.service.inter.EmployeeServiceInterface;
 import com.gvace.util.StringHelper;
 
 public class DoTest extends Action{
-	public static void main(String[] args){
-		System.out.println("???????????????????");
-		 System.out.println("Working Directory = " +
-	              System.getProperty("user.dir"));
-		ApplicationContext context = new ClassPathXmlApplicationContext("file:src/main/webapp/WEB-INF/applicationContext.xml");
-		System.out.println("???????????????????");
 
-		System.out.println("AAAAAAAAAAAa");
-		
-		Employee e = new Employee();
-		e.setUsername("a");
-		e.setPassword(StringHelper.MD5("a"));
-		e.setName("aaa");
-		e.setEmail("aaa@gvace.com");
-		e.setHireDate(new Date());
-		e.setSalary(80000f);
-		e.setGrade(1);
-		
-		EmployeeServiceInterface employeeServiceInter = (EmployeeServiceInterface)context.getBean("employeeService");
-		User user = ((EmployeeService)employeeServiceInter).login(e);
-		if(user!=null){
-			System.out.println("login good");
-		}
-		else{
-			System.out.println("login bad");
-		}
-	}
 	public void getWebApplicationContext(){
 		WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(
 				this.getServlet().getServletContext());
@@ -83,7 +54,7 @@ public class DoTest extends Action{
 	public void test2(){
 		ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
 		DepartmentServiceInterface departmentServiceInterface = (DepartmentServiceInterface)ac.getBean("departmentService");
-		Department d = (Department) departmentServiceInterface.findById(Department.class,1);
+		Department d = (Department) departmentServiceInterface.findById(1);
 		System.out.println(d.getName());
 	}
 	@Test

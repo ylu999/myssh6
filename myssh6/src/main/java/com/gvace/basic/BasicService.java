@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public abstract class BasicService implements BasicServiceInterface{
-	protected String MODEL_NAME;
+	protected Class MODEL_CLASS;
 	@Resource
 	private SessionFactory sessionFactory;
 	
@@ -19,26 +19,27 @@ public abstract class BasicService implements BasicServiceInterface{
 		return sessionFactory;
 	}
 
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+
+	public Class getMODEL_CLASS() {
+		return MODEL_CLASS;
 	}
 
-	public String getMODEL_NAME() {
-		return MODEL_NAME;
+
+	public void setMODEL_CLASS(Class mODEL_CLASS) {
+		MODEL_CLASS = mODEL_CLASS;
 	}
-	
-	@Resource
-	public void setMODEL_NAME(String mODEL_NAME) {
-		MODEL_NAME = mODEL_NAME;
+
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 	public void add(Object object) {
 		sessionFactory.getCurrentSession().save(object);
 	}
 
-	public Object deleteById(Class clazz, Serializable id) {
-		// TODO Auto-generated method stub
-		return null;
+	public void deleteById(Serializable id) {
+		executeQuery("delete from "+MODEL_CLASS.getName()+" where id=?",new Serializable[]{id});
 	}
 
 	public void update(Object object) {
@@ -46,8 +47,8 @@ public abstract class BasicService implements BasicServiceInterface{
 		
 	}
 
-	public Object findById(Class clazz, Serializable id) {
-		return sessionFactory.getCurrentSession().get(clazz, id);
+	public Object findById(Serializable id) {
+		return sessionFactory.getCurrentSession().get(MODEL_CLASS, id);
 	}
 
 	public List<Object> executeQuery(String hql, Object[] parameters) {
@@ -92,12 +93,12 @@ public abstract class BasicService implements BasicServiceInterface{
 	}
 
 	public List<Object> listByPage(int page, int pageSize) {
-		System.out.println("MODEL_NAME"+MODEL_NAME);
-		return executeQueryByPage("from "+MODEL_NAME, null, page, pageSize);
+		System.out.println("MODEL_NAME"+MODEL_CLASS.getName());
+		return executeQueryByPage("from "+MODEL_CLASS.getName(), null, page, pageSize);
 	}
 
 	public int getCount() {
-		return Integer.parseInt(uniqueResult("select count(*) from "+MODEL_NAME, null).toString());
+		return Integer.parseInt(uniqueResult("select count(*) from "+MODEL_CLASS.getName(), null).toString());
 	}
 
 	public int getPageCount(int pageSize) {

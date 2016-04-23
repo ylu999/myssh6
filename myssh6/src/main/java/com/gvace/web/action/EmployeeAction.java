@@ -23,7 +23,16 @@ public class EmployeeAction extends DispatchAction{
 	EmployeeServiceInterface employeeService;
 	@Resource
 	DepartmentServiceInterface departmentService;
-	
+	public void list(HttpServletRequest request){
+		Integer page = StringHelper.getIntegerParameter(request, "page");
+		if(page==null)page=1;
+		Integer pageSize = StringHelper.getIntegerParameter(request, "pageSize");
+		if(pageSize==null)pageSize=10;
+		List<Object> employeeList = employeeService.listByPage(page, pageSize);
+		request.setAttribute("employeeList", employeeList);
+		request.setAttribute("pageCount", employeeService.getPageCount(pageSize));
+		request.setAttribute("page", page);
+	}
 	public EmployeeServiceInterface getEmployeeService() {
 		return employeeService;
 	}
@@ -41,12 +50,7 @@ public class EmployeeAction extends DispatchAction{
 	public ActionForward list(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		Integer page = StringHelper.getIntegerParameter(request, "page");
-		if(page==null)page=1;
-		Integer pageSize = StringHelper.getIntegerParameter(request, "pageSize");
-		if(pageSize==null)pageSize=10;
-		List<Object> employeeList = employeeService.listByPage(page, pageSize);
-		request.setAttribute("employeeList", employeeList);
+		list(request);
 		return mapping.findForward("list");
 	}
 	public ActionForward update(ActionMapping mapping, ActionForm form,
@@ -67,13 +71,14 @@ public class EmployeeAction extends DispatchAction{
 		e.setGrade(empForm.getGrade());
 		e.setHireDate(new java.util.Date());
 		e.setSalary(empForm.getSalary());
-		e.setDepartment((Department)departmentService.findById(Department.class,empForm.getDepartment_id()));
+		e.setDepartment((Department)departmentService.findById(empForm.getDepartment_id()));
 		try{
 			employeeService.add(e);
 		}
 		catch(Exception exp){
 			return mapping.findForward("err");
 		}
+		list(request);
 		return mapping.findForward("ok");
 	}
 	public ActionForward doUpdate(ActionMapping mapping, ActionForm form,
