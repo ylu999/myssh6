@@ -39,7 +39,7 @@ public abstract class BasicService implements BasicServiceInterface{
 	}
 
 	public void deleteById(Serializable id) {
-		executeQuery("delete from "+MODEL_CLASS.getName()+" where id=?",new Serializable[]{id});
+		executeUpdate("delete from "+MODEL_CLASS.getName()+" where id=?",new Serializable[]{id});
 	}
 
 	public void update(Object object) {
@@ -50,8 +50,7 @@ public abstract class BasicService implements BasicServiceInterface{
 	public Object findById(Serializable id) {
 		return sessionFactory.getCurrentSession().get(MODEL_CLASS, id);
 	}
-
-	public List<Object> executeQuery(String hql, Object[] parameters) {
+	public Query buildQuery(String hql, Object[] parameters){
 		Query q = sessionFactory.getCurrentSession().createQuery(hql);
 		if(parameters!=null){
 			int i=0;
@@ -60,6 +59,14 @@ public abstract class BasicService implements BasicServiceInterface{
 				i++;
 			}
 		}
+		return q;
+	}
+	public void executeUpdate(String hql, Object[] parameters) {
+		Query q = buildQuery(hql, parameters);
+		q.executeUpdate();
+	}
+	public List<Object> executeQuery(String hql, Object[] parameters) {
+		Query q = buildQuery(hql, parameters);
 		return q.list();
 	}
 	public Object uniqueResult(String hql, Object[] parameters) {
@@ -85,11 +92,6 @@ public abstract class BasicService implements BasicServiceInterface{
 		}
 		q.setFirstResult(pageSize*(page-1)).setMaxResults(pageSize);
 		return q.list();
-	}
-
-	public List executeUpdate(String hql, Object[] parameters) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public List<Object> listByPage(int page, int pageSize) {
