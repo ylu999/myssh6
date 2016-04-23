@@ -5,6 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/js/jquery-1.12.3.js"></script>
+<script type="text/javascript" language="javascript" src="${pageContext.request.contextPath}/js/gvace.js"></script>
 <title>Insert title here</title>
 </head>
 <body>
@@ -24,10 +26,13 @@
 						<a href="${pageContext.request.contextPath}/emp.do?r=update&id=${employee.id}">Update</a>
 					</td>
 					<td>
-						<a href="${pageContext.request.contextPath}/emp.do?r=doDelete&id=${employee.id}">Delete</a>
+						<a class="deleteById" href="${pageContext.request.contextPath}/emp.do?r=doDelete&id=${employee.id}">Delete</a>
 					</td>
 				</tr>  
 			</c:forEach>
-	</table>	
+	</table>
+	<c:forEach var="pageNum" begin="1" end="${pageCount}">
+		<a href="${pageContext.request.contextPath}/emp.do?r=list&page=${pageNum}">[${pageNum}]</a>
+	</c:forEach>
 </body>
 </html>
