@@ -44,5 +44,23 @@ public class LoginAction extends DispatchAction{
 			return mapping.findForward("err");
 		}
 	}
+	public ActionForward main(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		
+		Employee e = (Employee) request.getSession().getAttribute("loginUser");
+		if(e!=null){
+			return mapping.findForward("main");
+		}
+		else{
+			return mapping.findForward("index");
+		}
+	}
+	public ActionForward quit(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		request.getSession().removeAttribute("loginUser");
+		return mapping.findForward("index");
+	}
 	
 }

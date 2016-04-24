@@ -43,8 +43,7 @@ public abstract class BasicService implements BasicServiceInterface{
 	}
 
 	public void update(Object object) {
-		// TODO Auto-generated method stub
-		
+		sessionFactory.getCurrentSession().update(object);
 	}
 
 	public Object findById(Serializable id) {

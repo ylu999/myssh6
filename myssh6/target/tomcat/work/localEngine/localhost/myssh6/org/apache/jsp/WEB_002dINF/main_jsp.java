@@ -72,7 +72,9 @@ public final class main_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t<a href=\"");
       out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate("${pageContext.request.contextPath}", java.lang.String.class, (PageContext)_jspx_page_context, null, false));
       out.write("/emp.do?r=search\">Search employee</a><br/>\n");
-      out.write("\t<a href=\"#\">Quit</a>\n");
+      out.write("\t<a href=\"");
+      out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.proprietaryEvaluate("${pageContext.request.contextPath}", java.lang.String.class, (PageContext)_jspx_page_context, null, false));
+      out.write("/login.do?r=quit\">Quit</a>\n");
       out.write("</body>\n");
       out.write("</html>");
     } catch (Throwable t) {

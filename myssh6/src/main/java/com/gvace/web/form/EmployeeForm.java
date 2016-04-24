@@ -3,6 +3,7 @@ package com.gvace.web.form;
 import org.apache.struts.action.ActionForm;
 
 public class EmployeeForm extends ActionForm {
+	private Integer id;
 	private String username;
 	private String password;
 	private String name;
@@ -11,6 +12,13 @@ public class EmployeeForm extends ActionForm {
 	private java.util.Date hireDate;
 	private Float salary;
 	private Integer department_id;
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getUsername() {
 		return username;
 	}

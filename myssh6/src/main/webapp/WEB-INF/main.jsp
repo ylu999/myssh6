@@ -11,6 +11,6 @@
 	<a href="${pageContext.request.contextPath}/emp.do?r=add">Add employee</a><br/>
 	<a href="${pageContext.request.contextPath}/emp.do?r=list">List employee</a><br/>
 	<a href="${pageContext.request.contextPath}/emp.do?r=search">Search employee</a><br/>
-	<a href="#">Quit</a>
+	<a href="${pageContext.request.contextPath}/login.do?r=quit">Quit</a>
 </body>
 </html>

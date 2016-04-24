@@ -55,7 +55,10 @@ public class EmployeeAction extends DispatchAction{
 	public ActionForward update(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		//to do
+		int id = Integer.parseInt(request.getParameter("id"));
+		Employee e = (Employee) employeeService.findById(id);
+		request.setAttribute("employee", e);
+		request.setAttribute("departmentList", departmentService.executeQuery("from Department", null));
 		return mapping.findForward("update");
 	}
 	public ActionForward doAdd(ActionMapping mapping, ActionForm form,
@@ -83,8 +86,26 @@ public class EmployeeAction extends DispatchAction{
 	public ActionForward doUpdate(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		//to do
-		return mapping.findForward("err");
+		EmployeeForm empForm = (EmployeeForm)form;
+		Employee e = new Employee();
+		e.setId(empForm.getId());
+		e.setUsername(empForm.getUsername());
+		e.setPassword(StringHelper.MD5(empForm.getPassword()));
+		e.setName(empForm.getName());
+		e.setEmail(empForm.getEmail());
+		e.setGrade(empForm.getGrade());
+		e.setHireDate(empForm.getHireDate());
+		e.setSalary(empForm.getSalary());
+		e.setDepartment((Department)departmentService.findById(empForm.getDepartment_id()));
+		try{
+			System.out.println(e.getId()+e.getName());
+			employeeService.update(e);
+		}
+		catch(Exception exp){
+			return mapping.findForward("err");
+		}
+		list(request);
+		return mapping.findForward("ok");
 	}
 	public ActionForward doDelete(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
